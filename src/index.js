@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import App from './components/App';
 
-const App = () => {
-  return <div>Hello React!</div>;
-};
+// We import our entry point style - file index.scss
+import './styles/index.scss'
 
 ReactDOM.render(
   <App/>, document.getElementById("root"));
