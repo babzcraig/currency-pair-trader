@@ -3,8 +3,19 @@ import {
   BTC_API_URL,
   FETCH_LAST_BTC_PRICE_SUCCESS,
   FETCH_LAST_BTC_PRICE_LOADING,
-  FETCH_LAST_BTC_PRICE_ERROR
+  FETCH_LAST_BTC_PRICE_ERROR,
+  UPDATE_AMOUNT_TO_BUY
 } from '../constants';
+
+export function updateAmountToBuy(amountToBuy) {
+    console.log('amount to buy action: ', amountToBuy)
+    return {
+      type: UPDATE_AMOUNT_TO_BUY,
+      payload: {
+        amountToBuy
+      }
+    }
+}
 
 export function fetchLastBTCPrice() {
   return async dispatch => {
