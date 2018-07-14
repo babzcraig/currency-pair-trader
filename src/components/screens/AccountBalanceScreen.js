@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const AccountBalanceDisplay = ({usdBalance, btcBalance}) => {
   return (
@@ -10,6 +11,11 @@ const AccountBalanceDisplay = ({usdBalance, btcBalance}) => {
         <span>BTC :</span>{btcBalance}</p>
     </div>
   )
+}
+
+AccountBalanceDisplay.propTypes = {
+  usdBalance: PropTypes.number.isRequired,
+  btcBalance: PropTypes.number.isRequired
 }
 
 export default AccountBalanceDisplay;

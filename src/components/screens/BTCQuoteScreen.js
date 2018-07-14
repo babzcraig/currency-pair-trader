@@ -1,6 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { getBTCQuote } from '../../utils';
 
-const BTCQuoteDisplay = ({usdBalance, btcBalance}) => {
+
+const BTCQuoteScreen = ({lastPrice, amountToBuy}) => {
+  const btcQuote = getBTCQuote(lastPrice, amountToBuy);
+
   return (
     <React.Fragment>
       <h2>For</h2>
@@ -8,10 +13,15 @@ const BTCQuoteDisplay = ({usdBalance, btcBalance}) => {
         <input type="number" placeholder="BTC" disabled/>
       </div>
       <div>
-        <input type="number" placeholder="Quoted Price" disabled/>
+        <input type="number" placeholder="Quoted Price" value={btcQuote} disabled/>
       </div>
     </React.Fragment>
   )
 }
 
-export default BTCQuoteDisplay;
+BTCQuoteScreen.propTypes = {
+  lastPrice: PropTypes.number,
+  amountToBuy: PropTypes.string
+}
+
+export default BTCQuoteScreen;
