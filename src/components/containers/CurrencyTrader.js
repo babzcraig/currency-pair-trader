@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 // Import container components
 import TradeContainer from './TradeContainer';
@@ -11,21 +12,31 @@ import BTCQuoteScreen from '../screens/BTCQuoteScreen';
 import {fetchLastBTCPrice} from "../../actions/tickerActions";
 
 class CurrencyTrader extends Component {
+  static propTypes = {
+    lastPrice: PropTypes.number,
+    loading: PropTypes.bool,
+    amountToBuy: PropTypes.string,
+    user: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      usdBalance: PropTypes.number,
+      btcBalance: PropTypes.number
+    })
+  }
+
   componentDidMount() {
     // fetch the last price for BTC
-    this
-      .props
-      .fetchLastBTCPrice();
+    this.props.fetchLastBTCPrice();
   }
 
   render() {
-    console.log(this.props)
-    const {usdBalance, btcBalance, lastPrice} = this.props.user
+    const { lastPrice, loading, user, amountToBuy } = this.props;
+    const {usdBalance, btcBalance} = user;
     return (
       <div className="currency-trader">
         <AccountBalanceScreen usdBalance={usdBalance} btcBalance={btcBalance}/>
         <TradeContainer/>
-        <BTCQuoteScreen lastPrice={lastPrice}/>
+        <BTCQuoteScreen lastPrice={lastPrice} amountToBuy={amountToBuy}/>
         <button className="main-btn">Trade</button>
       </div>
     )
@@ -34,11 +45,11 @@ class CurrencyTrader extends Component {
 
 const mapStateToProps = ({tickerReducer, userReducer}) => {
   // retrieve the reducer values
-  const {user} = userReducer;
-  const {lastPrice, loading: tickerLoading} = tickerReducer;
+  const { user } = userReducer;
+  const { lastPrice, loading, amountToBuy } = tickerReducer;
 
   // map the reducer values to the props of the component
-  return {user, lastPrice, tickerLoading};
+  return {user, lastPrice, loading, amountToBuy};
 };
 
 export default connect(mapStateToProps, {fetchLastBTCPrice})(CurrencyTrader);
