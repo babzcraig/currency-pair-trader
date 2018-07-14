@@ -57,7 +57,26 @@ body {
         font-weight: 600;
         font-size: 14px;
         margin-top: 16px;
+        cursor: pointer;
+
+        &:hover {
+          background: #2f5caf;
+        }
       }
+    }
+
+    .align-center {
+      text-align: center;
+    }
+
+    .small-success-text {
+      font-weight: bold;
+      color: green;
+    }
+
+    .small-error-text {
+        font-weight: bold;
+        color: red;
     }
   }
 }
