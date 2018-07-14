@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { getBTCQuote } from '../../utils';
 
 
-const BTCQuoteScreen = ({lastPrice, amountToBuy}) => {
-  const btcQuote = getBTCQuote(lastPrice, amountToBuy);
+const BTCQuoteScreen = ({lastPrice, btcQuote}) => {
 
   return (
     <React.Fragment>
@@ -21,7 +20,7 @@ const BTCQuoteScreen = ({lastPrice, amountToBuy}) => {
 
 BTCQuoteScreen.propTypes = {
   lastPrice: PropTypes.number,
-  amountToBuy: PropTypes.string
+  btcQuote: PropTypes.string
 }
 
 export default BTCQuoteScreen;

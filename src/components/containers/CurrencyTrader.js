@@ -9,7 +9,7 @@ import AccountBalanceScreen from '../screens/AccountBalanceScreen';
 import BTCQuoteScreen from '../screens/BTCQuoteScreen';
 
 // Import our action
-import {fetchLastBTCPrice} from "../../actions/tickerActions";
+import {fetchLastBTCPrice, tradeUSDForBTC} from "../../actions/tickerActions";
 
 class CurrencyTrader extends Component {
   static propTypes = {
@@ -29,15 +29,28 @@ class CurrencyTrader extends Component {
     this.props.fetchLastBTCPrice();
   }
 
+  _startTrade = () => {
+    const { btcQuote, amountToBuy, user: {usdBalance} } = this.props;
+    const usdAmountToBuy = Number(amountToBuy);
+    const btcAmountToBuy = Number(btcQuote);
+    this.props.tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy});
+  }
+
   render() {
-    const { lastPrice, loading, user, amountToBuy } = this.props;
+    const { lastPrice, loading, user, amountToBuy, btcQuote, successMsg, errorMsg } = this.props;
     const {usdBalance, btcBalance} = user;
+    console.log('loading: ', loading)
     return (
       <div className="currency-trader">
         <AccountBalanceScreen usdBalance={usdBalance} btcBalance={btcBalance}/>
         <TradeContainer/>
-        <BTCQuoteScreen lastPrice={lastPrice} amountToBuy={amountToBuy}/>
-        <button className="main-btn">Trade</button>
+        <BTCQuoteScreen lastPrice={lastPrice} btcQuote={btcQuote}/>
+        <button onClick={this._startTrade} className="main-btn">Trade</button>
+        <div className="align-center">
+        {loading && <small className="small-success-text">"Loading..."</small>}
+        {successMsg && <small className="small-success-text">{successMsg}</small>}
+        {errorMsg && <small className="small-error-text">{errorMsg}</small>}
+        </div>
       </div>
     )
   }
@@ -46,10 +59,10 @@ class CurrencyTrader extends Component {
 const mapStateToProps = ({tickerReducer, userReducer}) => {
   // retrieve the reducer values
   const { user } = userReducer;
-  const { lastPrice, loading, amountToBuy } = tickerReducer;
+  const { lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg } = tickerReducer;
 
   // map the reducer values to the props of the component
-  return {user, lastPrice, loading, amountToBuy};
+  return {user, lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg};
 };
 
-export default connect(mapStateToProps, {fetchLastBTCPrice})(CurrencyTrader);
+export default connect(mapStateToProps, {fetchLastBTCPrice, tradeUSDForBTC})(CurrencyTrader);
