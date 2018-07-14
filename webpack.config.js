@@ -4,7 +4,9 @@ const path = require('path')
 const htmlPlugin = new HtmlWebPackPlugin({template: "./src/index.html", filename: "./index.html"});
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: [
+    "babel-polyfill", "./src/index.js"
+  ],
   output: {
     path: path.resolve('build'),
     filename: 'index.js'
