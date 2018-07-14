@@ -2,16 +2,20 @@ import {
   FETCH_LAST_BTC_PRICE_SUCCESS,
   FETCH_LAST_BTC_PRICE_LOADING,
   FETCH_LAST_BTC_PRICE_ERROR,
-  UPDATE_AMOUNT_TO_BUY
+  UPDATE_AMOUNT_TO_BUY,
+  EXECUTE_TRADE,
+  TRADE_ERROR
 } from '../constants';
-import { checkStringForOnlyNumbers } from '../utils';
+import { checkStringForOnlyNumbers, getBTCQuote } from '../utils';
 
 const initialState = {
   loading: false,
   lastPrice: null,
   timestamp: null,
   amountToBuy: "",
-  errorMsg: ""
+  btcQuote: "",
+  errorMsg: "",
+  successMsg: ""
 }
 
 export default function (state = initialState, {type, payload}) {
@@ -41,15 +45,33 @@ export default function (state = initialState, {type, payload}) {
       const { amountToBuy } = payload;
       const containsOnlyNumbers = checkStringForOnlyNumbers(amountToBuy);
 
-      // If it's only numbers then we update the amount else just return state
+      // If it's only numbers then we update the amount and the quoted price, else just return state
       if (containsOnlyNumbers) {
+        const btcQuote = getBTCQuote(state.lastPrice, amountToBuy);
         return {
           ...state,
-          amountToBuy
+          amountToBuy,
+          btcQuote,
+          successMsg: "",
+          errorMsg: ""
         };
       } else {
         return state;
       }
+      case EXECUTE_TRADE:
+        return {
+          ...state,
+          amountToBuy: "",
+          btcQuote: "",
+          successMsg: "Trade successfully completed"
+        }
+      case TRADE_ERROR:
+        const { errorMsg } = payload;
+        return {
+          ...state,
+          errorMsg
+        }
+    
     default:
       return state;
   }

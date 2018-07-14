@@ -4,17 +4,40 @@ import {
   FETCH_LAST_BTC_PRICE_SUCCESS,
   FETCH_LAST_BTC_PRICE_LOADING,
   FETCH_LAST_BTC_PRICE_ERROR,
-  UPDATE_AMOUNT_TO_BUY
+  UPDATE_AMOUNT_TO_BUY,
+  TRADE_ERROR,
+  EXECUTE_TRADE
 } from '../constants';
 
 export function updateAmountToBuy(amountToBuy) {
-    console.log('amount to buy action: ', amountToBuy)
     return {
       type: UPDATE_AMOUNT_TO_BUY,
       payload: {
         amountToBuy
       }
     }
+}
+
+export function tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy}) {
+  return dispatch => {
+    // First ensure user has enough to make the trade
+    if (usdAmountToBuy > usdBalance) {
+      return dispatch({
+        type: TRADE_ERROR,
+        payload: {
+          errorMsg: "You have insufficient funds to make this trade"
+        }
+      })
+    };
+
+    dispatch({
+      type: EXECUTE_TRADE,
+      payload: {
+        usdAmountToBuy,
+        btcAmountToBuy
+      }
+    })
+  }
 }
 
 export function fetchLastBTCPrice() {
