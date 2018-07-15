@@ -2,7 +2,7 @@
 This app allows user execute trades against realtime exchange rates of USD to BTC. User has a prefunded account of $156.12 and can make trades of any amount up to his current account balance.
 
 ## To run
-To run the app, clone the app then run
+To run the app, clone the repo then run
 ```
 $ npm install
 ```
@@ -12,10 +12,10 @@ After modules have installed you can run the app in development mode with
 $ npm start
 ```
 
-This will run the app using webpack dev-server in production mode. It's set up with hot reloading so that a full browser reload is only mad for those changes requiring it.
+This will run the app using webpack dev-server in development mode. It's set up with hot reloading so that a full browser reload is only mad for those changes requiring it. We also include plug-ins for Babel (so we have access to ES6 and ES7 features - such as aync/await) and SCSS for styling.
 
 ## To build
-To create an optimized production build, run
+The development build is not optimized. To create an optimized production build with minification, caching etc, run
 ```
 $ npm build
 ```
@@ -29,3 +29,17 @@ $ npm test
 ```
 
 This will run unit tests for all the components in the app.
+
+## App Structure
+Entry point into the app is the `index.js` file. The rest of the files are kept in folders.
+- The actions folder contains out redux actions. These dispatch actions to our reducers.
+- The `components` folder holds all of our components. At the root of this is the `App` component. This is the base component.
+Apps are further broken down into `containers` - Smart components which handle data though not always handling state and `screens` Dumb containers which simply present the data to the user and are almost always functional components. The folders are named accordingly.
+- The `constants` folder exports our action types and other app constants such as the time-delay for fetching updated data
+- The `reducers` folder holds our reducers. It uses the combine reducers function provided by redux to combine the various reducers. We have a reducer that handles user data and one for ticker data. Both files are named accordingly.
+- The `store` is our redux store. This file pulls in the reducers and applies the middleware we will be using. In this project we are using the `thunk` middleware which allows us write async actions. This is especially useful when actions need to carry out asynchronous operations such as fetching the current BTC rate.
+- The `styles` folder holds the styling for the app. As this is a one sceen app, this is simply an `index.scss` file but in a larger app, there would be files for each reasonably large component as well as files for base styles, variables and so on.
+- The `utils` folder  holds our utility functions. This allows components that require a shared functions to share them. It also keeps code neat by storing these functions away.
+
+## Misc
+Our babel presets are stored in the `.babelrc` file. For this project we are using "env", "react" and "stage-2" presets. This will give us the fliexibility to use ES6 and 7 features such as destructuring, spread operators and async/await which helps keep code shorter and more readable.
