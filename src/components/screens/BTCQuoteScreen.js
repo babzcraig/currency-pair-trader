@@ -7,7 +7,7 @@ const BTCQuoteScreen = ({lastPrice, btcQuote}) => {
 
   return (
     <React.Fragment>
-      <h2>For</h2>
+      <h2 className="trade-section">For</h2>
       <div>
         <input type="number" placeholder="BTC" disabled/>
       </div>

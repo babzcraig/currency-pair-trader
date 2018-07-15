@@ -12,10 +12,12 @@ const initialState = {
   loading: false,
   lastPrice: null,
   timestamp: null,
+  loadCount: 0,
   amountToBuy: "",
   btcQuote: "",
   errorMsg: "",
-  successMsg: ""
+  successMsg: "",
+  warningMsg: ""
 }
 
 export default function (state = initialState, {type, payload}) {
@@ -23,10 +25,32 @@ export default function (state = initialState, {type, payload}) {
     case FETCH_LAST_BTC_PRICE_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
+        // We use this to determine the kind of loader to render
+        loadCount: state.loadCount + 1
       };
     case FETCH_LAST_BTC_PRICE_SUCCESS:
       const { timestamp, lastPrice } = payload;
+      // if there is an amountToBuy we need to calculate the new btcQuote
+      // and display it
+      if (state.amountToBuy) {
+        const btcQuote = getBTCQuote(lastPrice, state.amountToBuy);
+        // If the quote changes, let us tell our user
+        const warningMsg = btcQuote != state.btcQuote && !state.warningMsg ?
+          "The price of BTC just changed. Please confirm before proceeding with a trade"
+          : "";
+        return {
+          ...state,
+          lastPrice,
+          timestamp,
+          btcQuote,
+          loading: false,
+          successMsg: "",
+          errorMsg: "",
+          warningMsg: state.warningMsg || warningMsg
+        };
+      }
+      // if not we just return the lastPrice data
       return {
         ...state,
         lastPrice,
@@ -53,7 +77,8 @@ export default function (state = initialState, {type, payload}) {
           amountToBuy,
           btcQuote,
           successMsg: "",
-          errorMsg: ""
+          errorMsg: "",
+          warningMsg: ""
         };
       } else {
         return state;
@@ -64,6 +89,7 @@ export default function (state = initialState, {type, payload}) {
           amountToBuy: "",
           btcQuote: "",
           errorMsg: "",
+          warningMsg: "",
           successMsg: "Trade successfully completed"
         }
       case TRADE_ERROR:
@@ -71,7 +97,8 @@ export default function (state = initialState, {type, payload}) {
         return {
           ...state,
           errorMsg,
-          successMsg: ""
+          successMsg: "",
+          warningMsg: ""
         }
     
     default:

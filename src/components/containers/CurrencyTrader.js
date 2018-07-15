@@ -11,6 +11,9 @@ import LoadingScreen from '../screens/LoadingScreen';
 // Import our action
 import {fetchLastBTCPrice, tradeUSDForBTC} from "../../actions/tickerActions";
 
+// import poll interval constant
+import { POLL_INTERVAL_IN_MS } from '../../constants';
+
 class CurrencyTrader extends Component {
   static propTypes = {
     lastPrice: PropTypes.number,
@@ -24,26 +27,33 @@ class CurrencyTrader extends Component {
     })
   }
 
+
+
   componentDidMount() {
-    // fetch the last price for BTC
+    // fetch the last price for BTC and set an interval
     this.props.fetchLastBTCPrice();
+    this.pollInterval = setInterval(this.props.fetchLastBTCPrice, POLL_INTERVAL_IN_MS);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.pollInterval);
   }
 
   _startTrade = () => {
-    const { btcQuote, amountToBuy, user: {usdBalance} } = this.props;
+    const { timestamp, btcQuote, amountToBuy, user: {usdBalance} } = this.props;    
     const usdAmountToBuy = Number(amountToBuy);
     const btcAmountToBuy = Number(btcQuote);
     this.props.tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy});
   }
 
   render() {
-    const { lastPrice, loading, user, amountToBuy, btcQuote, successMsg, errorMsg } = this.props;
+    const { lastPrice, loading, user, amountToBuy, btcQuote, successMsg, errorMsg, warningMsg, loadCount } = this.props;
     const {usdBalance, btcBalance} = user;
     console.log('buying: ', amountToBuy)
     const requiredFieldsAreNotFilled = !amountToBuy;
     return (
       <div className="currency-trader">
-        <LoadingScreen loading={loading} />
+        <LoadingScreen loading={loading} loadCount={loadCount} />
         <AccountBalanceScreen usdBalance={usdBalance} btcBalance={btcBalance}/>
         <TradeContainer/>
         <BTCQuoteScreen lastPrice={lastPrice} btcQuote={btcQuote}/>
@@ -55,9 +65,10 @@ class CurrencyTrader extends Component {
             "main-btn btn-disabled" :
             "main-btn"
           }>Trade</button>
-        <div className="align-center">
+        <div className="alert-div">
           {successMsg && <small className="small-success-text">{successMsg}</small>}
           {errorMsg && <small className="small-error-text">{errorMsg}</small>}
+          {warningMsg && <small className="small-warning-text">{warningMsg}</small>}
         </div>
       </div>
     )
@@ -67,10 +78,10 @@ class CurrencyTrader extends Component {
 const mapStateToProps = ({tickerReducer, userReducer}) => {
   // retrieve the reducer values
   const { user } = userReducer;
-  const { lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg } = tickerReducer;
+  const { lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg, timestamp, warningMsg, loadCount } = tickerReducer;
 
   // map the reducer values to the props of the component
-  return {user, lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg};
+  return { user, lastPrice, loading, amountToBuy, btcQuote, successMsg, errorMsg, timestamp, warningMsg, loadCount };
 };
 
 export default connect(mapStateToProps, {fetchLastBTCPrice, tradeUSDForBTC})(CurrencyTrader);
