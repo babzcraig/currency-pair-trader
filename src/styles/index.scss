@@ -20,6 +20,17 @@ body {
       width: 325px;
       position: relative;
 
+      h2.trade-section {
+        margin-bottom: 20px;
+      }
+
+      .text-loading-screen {
+        position: absolute;
+        bottom: 228px;
+        left: 47px;
+        color: green;
+      }
+
       .loading-screen {
         position: absolute;
         top: 0;
@@ -106,8 +117,11 @@ body {
       }
     }
 
-    .align-center {
+    .alert-div {
       text-align: center;
+      position: absolute;
+      width: 100%;
+      left: 0;
     }
 
     .small-success-text {
@@ -118,6 +132,11 @@ body {
     .small-error-text {
         font-weight: bold;
         color: red;
+    }
+
+    .small-warning-text {
+      font-weight: bold;
+      color: orange;
     }
   }
 
