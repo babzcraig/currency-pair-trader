@@ -39,17 +39,25 @@ class CurrencyTrader extends Component {
   render() {
     const { lastPrice, loading, user, amountToBuy, btcQuote, successMsg, errorMsg } = this.props;
     const {usdBalance, btcBalance} = user;
-    console.log('loading: ', loading)
+    console.log('buying: ', amountToBuy)
+    const requiredFieldsAreNotFilled = !amountToBuy;
     return (
       <div className="currency-trader">
         <AccountBalanceScreen usdBalance={usdBalance} btcBalance={btcBalance}/>
         <TradeContainer/>
         <BTCQuoteScreen lastPrice={lastPrice} btcQuote={btcQuote}/>
-        <button onClick={this._startTrade} className="main-btn">Trade</button>
+        <button
+          disabled={requiredFieldsAreNotFilled}
+          onClick={this._startTrade}
+          className={
+            requiredFieldsAreNotFilled ?
+            "main-btn btn-disabled" :
+            "main-btn"
+          }>Trade</button>
         <div className="align-center">
-        {loading && <small className="small-success-text">"Loading..."</small>}
-        {successMsg && <small className="small-success-text">{successMsg}</small>}
-        {errorMsg && <small className="small-error-text">{errorMsg}</small>}
+          {loading && <small className="small-success-text">"Loading..."</small>}
+          {successMsg && <small className="small-success-text">{successMsg}</small>}
+          {errorMsg && <small className="small-error-text">{errorMsg}</small>}
         </div>
       </div>
     )
