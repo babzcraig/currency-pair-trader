@@ -7,7 +7,7 @@ import TradeContainer from './TradeContainer';
 // Import screen components
 import AccountBalanceScreen from '../screens/AccountBalanceScreen';
 import BTCQuoteScreen from '../screens/BTCQuoteScreen';
-
+import LoadingScreen from '../screens/LoadingScreen';
 // Import our action
 import {fetchLastBTCPrice, tradeUSDForBTC} from "../../actions/tickerActions";
 
@@ -43,6 +43,7 @@ class CurrencyTrader extends Component {
     const requiredFieldsAreNotFilled = !amountToBuy;
     return (
       <div className="currency-trader">
+        <LoadingScreen loading={loading} />
         <AccountBalanceScreen usdBalance={usdBalance} btcBalance={btcBalance}/>
         <TradeContainer/>
         <BTCQuoteScreen lastPrice={lastPrice} btcQuote={btcQuote}/>
@@ -55,7 +56,6 @@ class CurrencyTrader extends Component {
             "main-btn"
           }>Trade</button>
         <div className="align-center">
-          {loading && <small className="small-success-text">"Loading..."</small>}
           {successMsg && <small className="small-success-text">{successMsg}</small>}
           {errorMsg && <small className="small-error-text">{errorMsg}</small>}
         </div>
