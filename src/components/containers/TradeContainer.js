@@ -14,13 +14,11 @@ class TradeContainer extends Component {
 
   onInputChange = (e) => {
     const amountToBuy = e.target.value;
-    console.log('amount to buy: ', amountToBuy)
     this.props.updateAmountToBuy(amountToBuy);
   }
 
   render() {
     const { amountToBuy } = this.props;
-    console.log(amountToBuy);
     return (
       <TradeScreen
         amountToBuy={amountToBuy}

@@ -34,6 +34,14 @@ body {
         font-size: 13px;
         box-sizing: border-box;
         outline: none;
+
+        &.amount-to-buy {
+          border: 1px solid rgba(50, 112, 226, 0.59);
+
+          &:focus {
+            border: 1px solid rgba(50, 112, 226, 1);
+          }
+        }
       }
 
       .account-balance-section {
@@ -58,9 +66,15 @@ body {
         font-size: 14px;
         margin-top: 16px;
         cursor: pointer;
+        transition: background 0.25s ease-in-out;
 
         &:hover {
           background: #2f5caf;
+        }
+
+        &.btn-disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
         }
       }
     }

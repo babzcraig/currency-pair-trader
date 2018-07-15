@@ -1,7 +1,7 @@
 export function checkStringForOnlyNumbers(string) {
   // Skip the check on an empty this allows user return to an empty input
   if (!string.length) return true;
-  const regex = /^\d+$/;
+  const regex = /^[+-]?((\d+(\.\d*)?)|(\.\d+))$/;
   return regex.test(string);
 }
 

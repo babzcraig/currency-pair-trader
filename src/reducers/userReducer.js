@@ -15,7 +15,6 @@ const initialState = {
 export default function (state = initialState, {type, payload}) {
   switch (type) {
     case EXECUTE_TRADE:
-      console.log('error: ', payload)
       const { 
         usdAmountToBuy,
         btcAmountToBuy

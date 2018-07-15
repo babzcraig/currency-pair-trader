@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 
 const TradeScreen = ({amountToBuy, onInputChange}) => {
-  console.log('in trade screen: ', amountToBuy)
   return (
     <React.Fragment>
       <h2>Trade</h2>
@@ -11,7 +10,7 @@ const TradeScreen = ({amountToBuy, onInputChange}) => {
         <input type="number" placeholder="USD" disabled/>
       </div>
       <div>
-        <input type="text" placeholder="Enter your amount" onChange={onInputChange} value={amountToBuy}/>
+        <input className="amount-to-buy" type="text" placeholder="Enter your amount" onChange={onInputChange} value={amountToBuy}/>
       </div>
     </React.Fragment>
   )

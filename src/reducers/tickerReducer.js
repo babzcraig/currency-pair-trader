@@ -63,13 +63,15 @@ export default function (state = initialState, {type, payload}) {
           ...state,
           amountToBuy: "",
           btcQuote: "",
+          errorMsg: "",
           successMsg: "Trade successfully completed"
         }
       case TRADE_ERROR:
         const { errorMsg } = payload;
         return {
           ...state,
-          errorMsg
+          errorMsg,
+          successMsg: ""
         }
     
     default:
