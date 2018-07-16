@@ -62,6 +62,8 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         errorMsg: "There was an error fetching price data. Please try again",
+        warningMsg: "",
+        successMsg: "",
         loading: false
       };
     case UPDATE_AMOUNT_TO_BUY:
