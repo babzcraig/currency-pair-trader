@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   BTC_API_URL,
   FETCH_LAST_BTC_PRICE_SUCCESS,
@@ -7,18 +7,18 @@ import {
   UPDATE_AMOUNT_TO_BUY,
   TRADE_ERROR,
   EXECUTE_TRADE
-} from '../constants';
+} from "../constants";
 
 export function updateAmountToBuy(amountToBuy) {
-    return {
-      type: UPDATE_AMOUNT_TO_BUY,
-      payload: {
-        amountToBuy
-      }
+  return {
+    type: UPDATE_AMOUNT_TO_BUY,
+    payload: {
+      amountToBuy
     }
+  };
 }
 
-export function tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy}) {
+export function tradeUSDForBTC({ usdAmountToBuy, usdBalance, btcAmountToBuy }) {
   return dispatch => {
     // First ensure user has enough to make the trade
     if (usdAmountToBuy > usdBalance) {
@@ -27,8 +27,8 @@ export function tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy}) {
         payload: {
           errorMsg: "You have insufficient funds to make this trade"
         }
-      })
-    };
+      });
+    }
 
     dispatch({
       type: EXECUTE_TRADE,
@@ -36,8 +36,8 @@ export function tradeUSDForBTC({usdAmountToBuy, usdBalance, btcAmountToBuy}) {
         usdAmountToBuy,
         btcAmountToBuy
       }
-    })
-  }
+    });
+  };
 }
 
 export function fetchLastBTCPrice() {
@@ -48,7 +48,7 @@ export function fetchLastBTCPrice() {
     });
 
     try {
-      const {data} = await axios.get(BTC_API_URL);
+      const { data } = await axios.get(BTC_API_URL);
       // The Bitfinix API provides the last price on the 6th element of the returned
       // data array object
       const lastPrice = data[6];
@@ -60,7 +60,7 @@ export function fetchLastBTCPrice() {
           timestamp
         }
       });
-    } catch(error) {
+    } catch (error) {
       // Log error to the console and dispatch the error to the reducer
       console.log(error);
       dispatch({
@@ -68,9 +68,7 @@ export function fetchLastBTCPrice() {
         payload: {
           error
         }
-      })
+      });
     }
-  }
+  };
 }
-
-

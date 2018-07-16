@@ -1,15 +1,16 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require('path')
+const path = require("path");
 
-const htmlPlugin = new HtmlWebPackPlugin({template: "./src/index.html", filename: "./index.html"});
+const htmlPlugin = new HtmlWebPackPlugin({
+  template: "./src/index.html",
+  filename: "./index.html"
+});
 
 module.exports = {
-  entry: [
-    "babel-polyfill", "./src/index.js"
-  ],
+  entry: ["babel-polyfill", "./src/index.js"],
   output: {
-    path: path.resolve('build'),
-    filename: 'index.js'
+    path: path.resolve("build"),
+    filename: "index.js"
   },
   module: {
     rules: [
@@ -19,7 +20,8 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
-      }, {
+      },
+      {
         test: /\.s?css$/,
         exclude: /node_modules/,
         use: ["style-loader", "css-loader", "sass-loader"]

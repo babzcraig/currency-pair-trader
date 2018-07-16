@@ -1,10 +1,10 @@
-import React from 'react';
-import CurrencyTrader from './containers/CurrencyTrader'
+import React from "react";
+import CurrencyTrader from "./containers/CurrencyTrader";
 
 const App = () => {
   return (
     <div className="App">
-      <CurrencyTrader/>
+      <CurrencyTrader />
     </div>
   );
 };

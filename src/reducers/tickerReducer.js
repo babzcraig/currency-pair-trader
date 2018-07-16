@@ -5,8 +5,8 @@ import {
   UPDATE_AMOUNT_TO_BUY,
   EXECUTE_TRADE,
   TRADE_ERROR
-} from '../constants';
-import { checkStringForOnlyNumbers, getBTCQuote } from '../utils';
+} from "../constants";
+import { checkStringForOnlyNumbers, getBTCQuote } from "../utils";
 
 const initialState = {
   loading: false,
@@ -18,9 +18,9 @@ const initialState = {
   errorMsg: "",
   successMsg: "",
   warningMsg: ""
-}
+};
 
-export default function (state = initialState, {type, payload}) {
+export default function(state = initialState, { type, payload }) {
   switch (type) {
     case FETCH_LAST_BTC_PRICE_LOADING:
       return {
@@ -36,9 +36,10 @@ export default function (state = initialState, {type, payload}) {
       if (state.amountToBuy) {
         const btcQuote = getBTCQuote(lastPrice, state.amountToBuy);
         // If the quote changes, let us tell our user
-        const warningMsg = btcQuote != state.btcQuote && !state.warningMsg ?
-          "The price of BTC just changed. Please confirm before proceeding with a trade"
-          : "";
+        const warningMsg =
+          btcQuote != state.btcQuote && !state.warningMsg
+            ? "The price of BTC just changed. Please confirm before proceeding with a trade"
+            : "";
         return {
           ...state,
           lastPrice,
@@ -83,24 +84,24 @@ export default function (state = initialState, {type, payload}) {
       } else {
         return state;
       }
-      case EXECUTE_TRADE:
-        return {
-          ...state,
-          amountToBuy: "",
-          btcQuote: "",
-          errorMsg: "",
-          warningMsg: "",
-          successMsg: "Trade successfully completed"
-        }
-      case TRADE_ERROR:
-        const { errorMsg } = payload;
-        return {
-          ...state,
-          errorMsg,
-          successMsg: "",
-          warningMsg: ""
-        }
-    
+    case EXECUTE_TRADE:
+      return {
+        ...state,
+        amountToBuy: "",
+        btcQuote: "",
+        errorMsg: "",
+        warningMsg: "",
+        successMsg: "Trade successfully completed"
+      };
+    case TRADE_ERROR:
+      const { errorMsg } = payload;
+      return {
+        ...state,
+        errorMsg,
+        successMsg: "",
+        warningMsg: ""
+      };
+
     default:
       return state;
   }

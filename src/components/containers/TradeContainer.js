@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import TradeScreen from '../screens/TradeScreen';
-import { updateAmountToBuy } from '../../actions/tickerActions';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import TradeScreen from "../screens/TradeScreen";
+import { updateAmountToBuy } from "../../actions/tickerActions";
 
 class TradeContainer extends Component {
   static propTypes = {
@@ -10,12 +10,12 @@ class TradeContainer extends Component {
     amountToBuy: PropTypes.string,
     timestamp: PropTypes.any,
     updateAmountToBuy: PropTypes.func
-  }
+  };
 
-  onInputChange = (e) => {
+  onInputChange = e => {
     const amountToBuy = e.target.value;
     this.props.updateAmountToBuy(amountToBuy);
-  }
+  };
 
   render() {
     const { amountToBuy } = this.props;
@@ -24,11 +24,11 @@ class TradeContainer extends Component {
         amountToBuy={amountToBuy}
         onInputChange={this.onInputChange}
       />
-    )
+    );
   }
 }
 
-const mapStateToProps = ({tickerReducer}) => {
+const mapStateToProps = ({ tickerReducer }) => {
   // retrieve the reducer values
   const { lastPrice, timestamp, amountToBuy } = tickerReducer;
 
@@ -36,4 +36,7 @@ const mapStateToProps = ({tickerReducer}) => {
   return { lastPrice, timestamp, amountToBuy };
 };
 
-export default connect(mapStateToProps, {updateAmountToBuy})(TradeContainer);
+export default connect(
+  mapStateToProps,
+  { updateAmountToBuy }
+)(TradeContainer);
