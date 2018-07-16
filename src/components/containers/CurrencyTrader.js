@@ -49,7 +49,6 @@ class CurrencyTrader extends Component {
   render() {
     const { lastPrice, loading, user, amountToBuy, btcQuote, successMsg, errorMsg, warningMsg, loadCount } = this.props;
     const {usdBalance, btcBalance} = user;
-    console.log('buying: ', amountToBuy)
     const requiredFieldsAreNotFilled = !amountToBuy;
     return (
       <div className="currency-trader">
