@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AccountBalanceDisplay = ({usdBalance, btcBalance}) => {
+const AccountBalanceScreen = ({usdBalance, btcBalance}) => {
   return (
     <div className="account-balance-section">
       <h1>Account Balance</h1>
@@ -13,9 +13,9 @@ const AccountBalanceDisplay = ({usdBalance, btcBalance}) => {
   )
 }
 
-AccountBalanceDisplay.propTypes = {
-  usdBalance: PropTypes.number.isRequired,
-  btcBalance: PropTypes.number.isRequired
+AccountBalanceScreen.propTypes = {
+  usdBalance: PropTypes.number,
+  btcBalance: PropTypes.number
 }
 
-export default AccountBalanceDisplay;
+export default AccountBalanceScreen;

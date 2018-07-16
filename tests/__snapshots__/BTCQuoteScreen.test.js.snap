@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BTCQuoteScreen /> matches the snapshot 1`] = `
+<React.Fragment>
+  <h2
+    className="trade-section"
+  >
+    For
+  </h2>
+  <div>
+    <input
+      disabled={true}
+      placeholder="BTC"
+      type="number"
+    />
+  </div>
+  <div>
+    <input
+      disabled={true}
+      placeholder="Quoted Price"
+      type="number"
+    />
+  </div>
+</React.Fragment>
+`;

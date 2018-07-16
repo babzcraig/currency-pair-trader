@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AccountBalanceScreen /> matches the snapshot 1`] = `
+<div
+  className="account-balance-section"
+>
+  <h1>
+    Account Balance
+  </h1>
+  <p>
+    <span>
+      USD :
+    </span>
+  </p>
+  <p>
+    <span>
+      BTC :
+    </span>
+  </p>
+</div>
+`;

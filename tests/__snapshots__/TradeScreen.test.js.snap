@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TradeScreen /> matches the snapshot 1`] = `
+<React.Fragment>
+  <h2
+    className="trade-section"
+  >
+    Trade
+  </h2>
+  <div>
+    <input
+      disabled={true}
+      placeholder="USD"
+      type="number"
+    />
+  </div>
+  <div>
+    <input
+      className="amount-to-buy"
+      placeholder="Enter your amount"
+      type="text"
+    />
+  </div>
+</React.Fragment>
+`;
