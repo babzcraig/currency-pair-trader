@@ -28,7 +28,9 @@ Tests can be run using
 $ npm test
 ```
 
-This will run unit tests for all the components in the app.
+This will run unit tests for the components in the app.
+
+**In the interest of time, only a few components have been tested.
 
 ## Notes
 - The app fetches the last price at intervals. This interval is stored in a constant called `POLLING_INTERVAL_IN_MS`. If there is `amount to buy` value in the form field, the app will also adjust the BTC quote field accordingly. It will also show a warning to the user that the price has changed, alerting them so they can confirm before making a trade. This takes care of the use case where a user might walk away from the app and return after a prolonged interval during which time the exchange rates might have changes due to the  volatile nature of bitcoin marketplace.
